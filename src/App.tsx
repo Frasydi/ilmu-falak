@@ -159,77 +159,83 @@ function App() {
   return (
     <div className="App">
       <div>
-        {/* <img src="/icon.jpg" alt="" /> */}
-        {/* <h2>Universitas Muhammadiyah Makassar</h2> */}
-      </div>
-      <div>
         <div>
-          <label>Latitude</label>
-          <input id="" type="number" value={qiblahVal.latdeg} onChange={(el) => {
-            changeQiblahVal("latdeg", el.target.value)
-          }} />
-          <input id="" type="number" value={qiblahVal.latmin} onChange={(el) => {
-            changeQiblahVal("latmin", el.target.value)
-          }} />
-          <input id="" type="number" value={qiblahVal.latsec} onChange={(el) => {
-            changeQiblahVal("latsec", el.target.value)
-          }} />
-          <select name="" id="" value={qiblahVal.latdir} onChange={(el) => {
-            changeQiblahVal("latdir", el.target.value)
-          }}>
-            <option value="W">Barat</option>
-            <option value="N">Utara</option>
-            <option value="S">Selatan</option>
-            <option value="E">Timur</option>
-          </select>
+          {/* <img src="/icon.jpg" alt="" /> */}
+          {/* <h2>Universitas Muhammadiyah Makassar</h2> */}
         </div>
         <div>
-          <label>Longitude</label>
-          <input id="" type="number" value={qiblahVal.longdeg} onChange={(el) => {
-            changeQiblahVal("longdeg", el.target.value)
-          }} />
-          <input id="" type="number" value={qiblahVal.longmin} onChange={(el) => {
-            changeQiblahVal("longmin", el.target.value)
-          }} />
-          <input id="" type="number" value={qiblahVal.longsec} onChange={(el) => {
-            changeQiblahVal("longsec", el.target.value)
-          }} />
-          <select name="" id="" value={qiblahVal.longdir} onChange={(el) => {
-            changeQiblahVal("longdir", el.target.value)
-          }}>
-            <option value="W">Barat</option>
-            <option value="N">Utara</option>
-            <option value="S">Selatan</option>
-            <option value="E">Timur</option>
-          </select>
-        </div>
-        <div>
+          <div>
+            <label>Latitude</label>
+            <input id="" type="number" value={qiblahVal.latdeg} onChange={(el) => {
+              changeQiblahVal("latdeg", el.target.value)
+            }} />
+            <input id="" type="number" value={qiblahVal.latmin} onChange={(el) => {
+              changeQiblahVal("latmin", el.target.value)
+            }} />
+            <input id="" type="number" value={qiblahVal.latsec} onChange={(el) => {
+              changeQiblahVal("latsec", el.target.value)
+            }} />
+            <select name="" id="" value={qiblahVal.latdir} onChange={(el) => {
+              changeQiblahVal("latdir", el.target.value)
+            }}>
+              <option value="W">Barat</option>
+              <option value="N">Utara</option>
+              <option value="S">Selatan</option>
+              <option value="E">Timur</option>
+            </select>
+          </div>
+          <div>
+            <label>Longitude</label>
+            <input id="" type="number" value={qiblahVal.longdeg} onChange={(el) => {
+              changeQiblahVal("longdeg", el.target.value)
+            }} />
+            <input id="" type="number" value={qiblahVal.longmin} onChange={(el) => {
+              changeQiblahVal("longmin", el.target.value)
+            }} />
+            <input id="" type="number" value={qiblahVal.longsec} onChange={(el) => {
+              changeQiblahVal("longsec", el.target.value)
+            }} />
+            <select name="" id="" value={qiblahVal.longdir} onChange={(el) => {
+              changeQiblahVal("longdir", el.target.value)
+            }}>
+              <option value="W">Barat</option>
+              <option value="N">Utara</option>
+              <option value="S">Selatan</option>
+              <option value="E">Timur</option>
+            </select>
+          </div>
+          <div>
 
+          </div>
+        </div>
+        <div>
+          <div>
+            <label htmlFor="">Date</label>
+            <input type="date" value={qiblahVal.obsDate.toISOString().split("T")[0]} onChange={(ev) => {
+              const date = new Date(ev.target.value)
+              changeQiblahVal("obsDate", date)
+
+            }} />
+          </div>
+          <div>
+            <label htmlFor="">Time</label>
+            <input type="time" value={qiblahVal.obstime.toTimeString().split(' ')[0].slice(0, 5)} onChange={(ev) => {
+              const date = new Date()
+              const [hour,minutes] = ev.target.value.split(":")
+              date.setHours(parseInt(hour))
+              date.setMinutes(parseInt(minutes))
+              changeQiblahVal("obstime", date)
+
+            }} />
+          </div>
+          <div>
+            <button onClick={() => {
+              submitData()
+            }}>Apply</button>
+          </div>
         </div>
       </div>
-      <div>
-        <div>
-          <label htmlFor="">Date</label>
-          <input type="date" value={qiblahVal.obsDate.toISOString().split("T")[0]} onChange={(ev) => {
-            const date = new Date(ev.target.value)
-            changeQiblahVal("obsDate", date)
 
-          }} />
-        </div>
-        <div>
-          <label htmlFor="">Time</label>
-          <input type="time" value={qiblahVal.obstime.toTimeString().split(' ')[0].slice(0, 5)} onChange={(ev) => {
-            const date = new Date(ev.target.value)
-            changeQiblahVal("obsDate", date)
-
-          }} />
-        </div>
-        <div>
-          <button onClick={() => {
-            submitData()
-          }}>Apply</button>
-        </div>
-      </div>
       {
         resultVal != null &&
         <>
@@ -276,7 +282,7 @@ function App() {
             </div>
 
           </div>
-          <div className="fullscreen">
+          <div className="fullscreenbtn">
             <button onClick={() => {
               handle.enter()
             }}>Full Screen</button>
