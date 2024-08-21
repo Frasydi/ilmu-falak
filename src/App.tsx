@@ -4,6 +4,7 @@ import './App.css'
 import { performCalculation, qiblahval, setDefaultValues } from "./util/scriptUtil";
 import { ApolloError, gql, useApolloClient } from "@apollo/client";
 import { dir } from "console";
+import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 const GET_SOLAR_POSITION = gql`
   query SolarPosition(
@@ -53,8 +54,8 @@ function App() {
   })
 
   const [resultVal, setResultVal] = useState<{
-    solarAzimuth : number,
-    shadowAzimuth : number
+    solarAzimuth: number,
+    shadowAzimuth: number
   } | null>(null)
 
   const {
@@ -67,6 +68,8 @@ function App() {
     },
     userDecisionTimeout: 5000
   });
+
+  const handle = useFullScreenHandle();
 
   const timeInternal = useRef<any>(null)
   const [timeValid, setTimeValid] = useState(0)
@@ -155,6 +158,10 @@ function App() {
 
   return (
     <div className="App">
+      <div>
+        {/* <img src="/icon.jpg" alt="" /> */}
+        {/* <h2>Universitas Muhammadiyah Makassar</h2> */}
+      </div>
       <div>
         <div>
           <label>Latitude</label>
@@ -260,7 +267,7 @@ function App() {
                 left: "47%",
                 backgroundColor: "black",
                 width: "6%",
-                aspectRatio :"1/1",
+                aspectRatio: "1/1",
                 borderRadius: "10rem",
                 transform: "translate(-50% -50%)"
               }}>
@@ -269,15 +276,73 @@ function App() {
             </div>
 
           </div>
+          <div className="fullscreen">
+            <button onClick={() => {
+              handle.enter()
+            }}>Full Screen</button>
+          </div>
           <div className="result">
             <div>
-              <p style={{color : "red"}}>Arah Kiblat : {resultVal.solarAzimuth.toFixed(2)} derajat</p>
+              <p style={{ color: "red" }}>Arah Kiblat : {resultVal.solarAzimuth.toFixed(2)} derajat</p>
               <p>Arah Bayangan : {resultVal.shadowAzimuth.toFixed(2)} derajat</p>
             </div>
-            <div>
+            {/* <div>
               <p>Valid Sampai {formatTime} </p>
-            </div>
+            </div> */}
           </div>
+
+          <FullScreen handle={handle} >
+            <div className="compass full" style={{
+              display: handle.active == false ? "none" : "block"
+            }}>
+              <div>
+                <div style={{
+                  position: "absolute",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  height: "50%",
+                  backgroundColor: "red",
+                  width: ".2rem",
+                  transformOrigin: "bottom",
+                  rotate: `${resultVal.solarAzimuth}deg`,
+                  borderRadius: "1rem"
+                }}>
+
+                </div>
+                <div style={{
+                  position: "absolute",
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  height: "50%",
+                  backgroundColor: "black",
+                  width: ".2rem",
+                  transformOrigin: "bottom",
+                  rotate: `${resultVal.shadowAzimuth}deg`,
+                  borderRadius: "1rem"
+                }}>
+
+                </div>
+                <div style={{
+                  position: "absolute",
+                  top: "47%",
+                  left: "47%",
+                  backgroundColor: "black",
+                  width: "6%",
+                  aspectRatio: "1/1",
+                  borderRadius: "10rem",
+                  transform: "translate(-50% -50%)"
+                }}>
+
+                </div>
+              </div>
+              <button onClick={() => {
+                handle.exit()
+              }}>
+
+              </button>
+
+            </div>
+          </FullScreen>
         </>
 
       }
