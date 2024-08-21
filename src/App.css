@@ -77,8 +77,8 @@
     & > div {
       background: url(/compass.png) center no-repeat;
       background-size: contain;
-      height: 320px;
-      width: 320px;
+      width: 50%;
+      aspect-ratio: 1/1;
       position: relative;
     }
   }
