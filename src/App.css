@@ -163,7 +163,7 @@ div.compass {
 
     & > div {
       width: unset;
-      height: 95%;
+      width: 50%;
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
