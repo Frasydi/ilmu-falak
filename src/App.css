@@ -5,17 +5,21 @@
   flex-direction: column;
   min-height: 100vh;
   padding-bottom: 10vh;
+  color: white;
+  font-family: "Poppins", system-ui;
+
   & > div:nth-child(1) {
-    min-height: 30vh;
+    min-height: 90vh;
     padding-bottom: 2vh;
     width: 90%;
     align-self: center;
-    box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
-    border-radius: .5rem;
+    box-shadow: 1px 1px 5px 2px rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
     margin-top: 2rem;
-    & input, select {
-       border-radius: 1rem;
-       /* border: 0px; */
+    & input,
+    select {
+      border-radius: 1rem;
+      /* border: 0px; */
     }
     & > div:nth-child(1) {
       display: flex;
@@ -28,33 +32,56 @@
     }
 
     & > div:nth-child(2) {
-      height: 15vh;
       padding-inline: 5vw;
-      
+
       display: flex;
       flex-direction: column;
       gap: 1rem;
       padding-top: 2rem;
-      padding-bottom: .5rem;
+      padding-bottom: 0.5rem;
+      gap : 3rem;
       & > div {
         display: flex;
         justify-content: space-around;
         width: 90%;
         flex-wrap: wrap;
+        
         & > label {
           width: 100%;
-          text-align: left;
+          text-align: center;
+          margin-bottom : .5rem
         }
-        & > input {
-          margin-left: 1rem;
-          width: 17%;
-        }
-        & > select {
-          width: 20%;
+        & > div {
+          display: grid;
+          grid-template-columns: 1fr;
+          row-gap: 2em;
+          column-gap: 1rem;
+          & > div {
+            display: flex;
+            align-items: center;
+            &>label {
+              all:unset;
+              width: 20%;
+            }
+            &>p {
+              width: 25%;
+            }
+            & > input,
+            select {
+              all: unset;
+              margin-left: 1rem;
+              background-color: white;
+              border-radius: 1rem;
+              padding-inline: 1.5rem;
+              padding-block: 0.5rem;
+              color: black;
+              width: 70%;
+              max-width: 70%;
+            }
+          }
         }
       }
     }
-    
 
     & > div:nth-child(3) {
       min-height: 15vh;
@@ -62,7 +89,7 @@
       padding-inline: 5vw;
       display: flex;
       flex-wrap: wrap;
-      
+
       & > div {
         display: flex;
         flex-wrap: wrap;
@@ -91,7 +118,7 @@
             box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
             color: blue;
             font-weight: bold;
-            transition: all .2s ease-in-out;
+            transition: all 0.2s ease-in-out;
             &:active {
               opacity: 0.5;
             }
@@ -105,14 +132,25 @@
       }
     }
 
-    &>svg {
+    & > svg {
       background-color: white;
     }
-
   }
 }
 
-
+@media screen and ( max-width : 768px) {
+    .App {
+      &>div:nth-child(1) {
+        &>div:nth-child(3) {
+          flex-direction: column;
+          row-gap : 1rem;
+          &>div {
+            width: 100%;
+          }
+        }
+      }
+    }
+}
 
 div.fullscreenbtn {
   display: flex;
