@@ -1,9 +1,8 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { useGeolocated } from "react-geolocated";
 import './App.css'
-import { performCalculation, qiblahval, setDefaultValues } from "./util/scriptUtil";
+import { qiblahval, setDefaultValues } from "./util/scriptUtil";
 import { ApolloError, gql, useApolloClient } from "@apollo/client";
-import { dir } from "console";
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 
 const GET_SOLAR_POSITION = gql`
