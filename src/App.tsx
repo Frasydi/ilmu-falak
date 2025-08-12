@@ -23,7 +23,6 @@ const GET_SOLAR_POSITION = gql`
       shadowAzimuth
       sunAzimuthDifference
       shadowAzimuthDifference
-      distanceToKaaba
       observationLocation {
         latitude
         longitude
@@ -157,241 +156,231 @@ function App() {
 
   return (
     <div className="App">
-      <div style={{
-        display :resultVal == null ? 'block' : 'none'
-      }}>
-        <div>
-          {/* <img src="/icon.jpg" alt="" /> */}
-          {/* <h2>Universitas Muhammadiyah Makassar</h2> */}
-        </div>
-        <div>
-          <div>
-            <label>Latitude</label>
-            <div>
-              <div>
-                <label htmlFor="">Derajat</label>
-                <p >:</p>
-                <input id="" type="number" value={qiblahVal.latdeg} onChange={(el) => {
-                  changeQiblahVal("latdeg", el.target.value)
-                }} />
-
-              </div>
-              <div>
-                <label htmlFor="">Menit</label>
-                <p >:</p>
-                <input id="" type="number" value={qiblahVal.latmin} onChange={(el) => {
-                  changeQiblahVal("latmin", el.target.value)
-                }} />
-              </div>
-              <div>
-                <label htmlFor="">Detik</label>
-                <p>:</p>
-                <input id="" type="number" value={qiblahVal.latsec} onChange={(el) => {
-                  changeQiblahVal("latsec", el.target.value)
-                }} />
-              </div>
-              <div>
-                <label htmlFor="">Arah</label>
-                <p>:</p>
-                <select name="" id="" value={qiblahVal.latdir} onChange={(el) => {
-                  changeQiblahVal("latdir", el.target.value)
-                }}>
-                  <option value="W">Barat</option>
-                  <option value="N">Utara</option>
-                  <option value="S">Selatan</option>
-                  <option value="E">Timur</option>
-                </select>
-              </div>
-            </div>
+      {resultVal == null ? (
+        <div className="form-container">
+          <div className="header">
+            <h1>Ilmu Falak Calculator</h1>
+            <p>Calculate solar position and Qibla direction</p>
           </div>
-          <div>
-            <label>Longitude</label>
-            <div>
-              <div>
-                <label htmlFor="">Derajat</label>
-                <p >:</p>
-                <input id="" type="number" value={qiblahVal.longdeg} onChange={(el) => {
-                  changeQiblahVal("longdeg", el.target.value)
-                }} />
-
-              </div>
-              <div>
-                <label htmlFor="">Menit</label>
-                <p >:</p>
-                <input id="" type="number" value={qiblahVal.longmin} onChange={(el) => {
-                  changeQiblahVal("longmin", el.target.value)
-                }} />
-              </div>
-              <div>
-                <label htmlFor="">Detik</label>
-                <p>:</p>
-                <input id="" type="number" value={qiblahVal.longsec} onChange={(el) => {
-                  changeQiblahVal("longsec", el.target.value)
-                }} />
-              </div>
-              <div>
-                <label htmlFor="">Arah</label>
-                <p>:</p>
-                <select name="" id="" value={qiblahVal.longdir} onChange={(el) => {
-                  changeQiblahVal("longdir", el.target.value)
-                }}>
-                  <option value="W">Barat</option>
-                  <option value="N">Utara</option>
-                  <option value="S">Selatan</option>
-                  <option value="E">Timur</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div>
-
-          </div>
-        </div>
-        <div>
-          <div>
-            <label htmlFor="">Date</label>
-            <input type="date" value={qiblahVal.obsDate.toISOString().split("T")[0]} onChange={(ev) => {
-              const date = new Date(ev.target.value)
-              changeQiblahVal("obsDate", date)
-
-            }} />
-          </div>
-          <div>
-            <label htmlFor="">Time</label>
-            <input type="time" value={qiblahVal.obstime.toTimeString().split(' ')[0].slice(0, 5)} onChange={(ev) => {
-              const date = new Date()
-              const [hour, minutes] = ev.target.value.split(":")
-              date.setHours(parseInt(hour))
-              date.setMinutes(parseInt(minutes))
-              changeQiblahVal("obstime", date)
-
-            }} />
-          </div>
-          <div>
-            <button onClick={() => {
-              submitData()
-            }}>Apply</button>
-          </div>
-        </div>
-      </div>
-
-      {
-        resultVal != null &&
-        <>
-          <div className="compass">
-            <div>
-              <div style={{
-                position: "absolute",
-                left: "50%",
-                transform: "translateX(-50%)",
-                height: "50%",
-                backgroundColor: "red",
-                width: ".2rem",
-                transformOrigin: "bottom",
-                rotate: `${resultVal.solarAzimuth}deg`,
-                borderRadius: "1rem"
-              }}>
-
-              </div>
-              <div style={{
-                position: "absolute",
-                left: "50%",
-                transform: "translateX(-50%)",
-                height: "50%",
-                backgroundColor: "orange",
-                width: ".2rem",
-                transformOrigin: "bottom",
-                rotate: `${resultVal.shadowAzimuth}deg`,
-                borderRadius: "1rem"
-              }}>
-
-              </div>
-              <div style={{
-                position: "absolute",
-                top: "47%",
-                left: "47%",
-                backgroundColor: "black",
-                width: "6%",
-                aspectRatio: "1/1",
-                borderRadius: "10rem",
-                transform: "translate(-50% -50%)"
-              }}>
-
-              </div>
-            </div>
-
-          </div>
-          <div className="fullscreenbtn">
-            <button onClick={() => {
-              handle.enter()
-            }}>Full Screen</button>
-          </div>
-          <div className="result">
-            <div>
-              <p style={{ color: "red" }}>Arah Kiblat : {resultVal.solarAzimuth.toFixed(2)} derajat</p>
-              <p>Arah Bayangan : {resultVal.shadowAzimuth.toFixed(2)} derajat</p>
-            </div>
-            {/* <div>
-              <p>Valid Sampai {formatTime} </p>
-            </div> */}
-          </div>
-
-          <FullScreen handle={handle} >
-            <div className="compass full" style={{
-              display: handle.active == false ? "none" : "block"
-            }}>
-              <div>
-                <div style={{
-                  position: "absolute",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  height: "50%",
-                  backgroundColor: "red",
-                  width: ".2rem",
-                  transformOrigin: "bottom",
-                  rotate: `${resultVal.solarAzimuth}deg`,
-                  borderRadius: "1rem"
-                }}>
-
-                </div>
-                <div style={{
-                  position: "absolute",
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  height: "50%",
-                  backgroundColor: "orange",
-                  width: ".2rem",
-                  transformOrigin: "bottom",
-                  rotate: `${resultVal.shadowAzimuth}deg`,
-                  borderRadius: "1rem"
-                }}>
-
-                </div>
-                <div style={{
-                  position: "absolute",
-                  top: "47%",
-                  left: "47%",
-                  backgroundColor: "black",
-                  width: "6%",
-                  aspectRatio: "1/1",
-                  borderRadius: "10rem",
-                  transform: "translate(-50% -50%)"
-                }}>
-
+          
+          <div className="form-content">
+            <div className="form-grid">
+              <div className="form-section">
+                <h3>📍 Latitude</h3>
+                <div className="coordinate-grid">
+                  <div className="input-group">
+                    <label htmlFor="">Degrees</label>
+                    <input 
+                      type="number" 
+                      value={qiblahVal.latdeg} 
+                      onChange={(el) => changeQiblahVal("latdeg", el.target.value)} 
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="">Minutes</label>
+                    <input 
+                      type="number" 
+                      value={qiblahVal.latmin} 
+                      onChange={(el) => changeQiblahVal("latmin", el.target.value)} 
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="">Seconds</label>
+                    <input 
+                      type="number" 
+                      value={qiblahVal.latsec} 
+                      onChange={(el) => changeQiblahVal("latsec", el.target.value)} 
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="">Direction</label>
+                    <select 
+                      value={qiblahVal.latdir} 
+                      onChange={(el) => changeQiblahVal("latdir", el.target.value)}
+                    >
+                      <option value="W">West</option>
+                      <option value="N">North</option>
+                      <option value="S">South</option>
+                      <option value="E">East</option>
+                    </select>
+                  </div>
                 </div>
               </div>
-              <button onClick={() => {
-                handle.exit()
-              }}>
 
-              </button>
+              <div className="form-section">
+                <h3>🌐 Longitude</h3>
+                <div className="coordinate-grid">
+                  <div className="input-group">
+                    <label htmlFor="">Degrees</label>
+                    <input 
+                      type="number" 
+                      value={qiblahVal.longdeg} 
+                      onChange={(el) => changeQiblahVal("longdeg", el.target.value)} 
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="">Minutes</label>
+                    <input 
+                      type="number" 
+                      value={qiblahVal.longmin} 
+                      onChange={(el) => changeQiblahVal("longmin", el.target.value)} 
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="">Seconds</label>
+                    <input 
+                      type="number" 
+                      value={qiblahVal.longsec} 
+                      onChange={(el) => changeQiblahVal("longsec", el.target.value)} 
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="">Direction</label>
+                    <select 
+                      value={qiblahVal.longdir} 
+                      onChange={(el) => changeQiblahVal("longdir", el.target.value)}
+                    >
+                      <option value="W">West</option>
+                      <option value="N">North</option>
+                      <option value="S">South</option>
+                      <option value="E">East</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
+              <div className="form-section datetime-section">
+                <h3>⏰ Date & Time</h3>
+                <div className="datetime-grid">
+                  <div className="input-group">
+                    <label htmlFor="">Date</label>
+                    <input 
+                      type="date" 
+                      value={qiblahVal.obsDate.toISOString().split("T")[0]} 
+                      onChange={(ev) => {
+                        const date = new Date(ev.target.value)
+                        changeQiblahVal("obsDate", date)
+                      }} 
+                    />
+                  </div>
+                  <div className="input-group">
+                    <label htmlFor="">Time</label>
+                    <input 
+                      type="time" 
+                      value={qiblahVal.obstime.toTimeString().split(' ')[0].slice(0, 5)} 
+                      onChange={(ev) => {
+                        const date = new Date()
+                        const [hour, minutes] = ev.target.value.split(":")
+                        date.setHours(parseInt(hour))
+                        date.setMinutes(parseInt(minutes))
+                        changeQiblahVal("obstime", date)
+                      }} 
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="submit-section">
+                <button className="btn-primary" onClick={submitData}>
+                  Calculate Position
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="results-container">
+          <div className="compass-section">
+            <div className="compass-container">
+              <div className="compass">
+                <div 
+                  className="compass-needle solar-needle"
+                  style={{
+                    transform: `translateX(-50%) rotate(${resultVal.solarAzimuth}deg)`
+                  }}
+                />
+                <div 
+                  className="compass-needle shadow-needle"
+                  style={{
+                    transform: `translateX(-50%) rotate(${resultVal.shadowAzimuth}deg)`
+                  }}
+                />
+                <div className="compass-center" />
+              </div>
+            </div>
+
+            <div className="legend">
+              <div className="legend-item">
+                <div className="legend-color legend-solar"></div>
+                <span>Solar Direction</span>
+              </div>
+              <div className="legend-item">
+                <div className="legend-color legend-shadow"></div>
+                <span>Shadow Direction</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="results-grid">
+            <div className="result-card">
+              <h4>Qibla Direction</h4>
+              <p className="result-value solar-value">
+                {resultVal.solarAzimuth.toFixed(2)}°
+              </p>
+            </div>
+            <div className="result-card">
+              <h4>Shadow Direction</h4>
+              <p className="result-value shadow-value">
+                {resultVal.shadowAzimuth.toFixed(2)}°
+              </p>
+            </div>
+          </div>
+
+          <div className="action-buttons">
+            <button className="btn-secondary" onClick={() => setResultVal(null)}>
+              ← Back to Form
+            </button>
+            <button className="btn-primary" onClick={() => handle.enter()}>
+              Fullscreen View
+            </button>
+          </div>
+
+          <FullScreen handle={handle}>
+            <div className="fullscreen-compass" style={{ display: handle.active ? "flex" : "none" }}>
+              <div className="compass-container">
+                <div className="compass">
+                  <div 
+                    className="compass-needle solar-needle"
+                    style={{
+                      transform: `translateX(-50%) rotate(${resultVal.solarAzimuth}deg)`
+                    }}
+                  />
+                  <div 
+                    className="compass-needle shadow-needle"
+                    style={{
+                      transform: `translateX(-50%) rotate(${resultVal.shadowAzimuth}deg)`
+                    }}
+                  />
+                  <div className="compass-center" />
+                </div>
+              </div>
+              
+              <div className="legend">
+                <div className="legend-item">
+                  <div className="legend-color legend-solar"></div>
+                  <span>Solar Direction: {resultVal.solarAzimuth.toFixed(2)}°</span>
+                </div>
+                <div className="legend-item">
+                  <div className="legend-color legend-shadow"></div>
+                  <span>Shadow Direction: {resultVal.shadowAzimuth.toFixed(2)}°</span>
+                </div>
+              </div>
+              
+              <button className="close-button" onClick={() => handle.exit()} />
             </div>
           </FullScreen>
-        </>
-
-      }
-
+        </div>
+      )}
     </div>
   );
 }
