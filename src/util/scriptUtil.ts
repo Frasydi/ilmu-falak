@@ -154,7 +154,7 @@ export const setDefaultValues = (calback: (data:qiblahval) => void) => {
 
 
 // Convert decimal degrees to DMS and determine direction based on latitude or longitude
-const convertToDMS = (decimal: number, type: "lat" | "lon") => {
+export const convertToDMS = (decimal: number, type: "lat" | "lon") => {
     const absDecimal = Math.abs(decimal);
     const degrees = Math.floor(absDecimal);
     const minutes = Math.floor((absDecimal - degrees) * 60);
